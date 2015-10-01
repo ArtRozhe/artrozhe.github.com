@@ -1,0 +1,95 @@
+.sprite {
+    background-image: url(spritesheet.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.sprite-icon-checkbox {
+    width: 20px;
+    height: 20px;
+    background-position: -15px -15px;
+}
+
+.sprite-icon-checkbox-checked {
+    width: 20px;
+    height: 20px;
+    background-position: -65px -15px;
+}
+
+.sprite-icon-close {
+    width: 23px;
+    height: 23px;
+    background-position: -115px -15px;
+}
+
+.sprite-icon-facebook {
+    width: 12px;
+    height: 22px;
+    background-position: -15px -68px;
+}
+
+.sprite-icon-fb-hover {
+    width: 12px;
+    height: 22px;
+    background-position: -57px -68px;
+}
+
+.sprite-icon-inst-hover {
+    width: 21px;
+    height: 21px;
+    background-position: -99px -68px;
+}
+
+.sprite-icon-instagram {
+    width: 21px;
+    height: 21px;
+    background-position: -150px -68px;
+}
+
+.sprite-icon-login {
+    width: 18px;
+    height: 16px;
+    background-position: -99px -119px;
+}
+
+.sprite-icon-login-hover {
+    width: 18px;
+    height: 16px;
+    background-position: -147px -119px;
+}
+
+.sprite-icon-pass {
+    width: 15px;
+    height: 17px;
+    background-position: -168px -15px;
+}
+
+.sprite-icon-radio {
+    width: 20px;
+    height: 20px;
+    background-position: -195px -119px;
+}
+
+.sprite-icon-radio-checked {
+    width: 20px;
+    height: 20px;
+    background-position: -15px -169px;
+}
+
+.sprite-icon-user {
+    width: 15px;
+    height: 15px;
+    background-position: -201px -62px;
+}
+
+.sprite-icon-vk {
+    width: 25px;
+    height: 16px;
+    background-position: -65px -169px;
+}
+
+.sprite-icon-vk-hover {
+    width: 25px;
+    height: 16px;
+    background-position: -120px -169px;
+}
