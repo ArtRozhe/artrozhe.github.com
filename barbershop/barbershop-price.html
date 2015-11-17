@@ -37,7 +37,7 @@
             </div>
          </div>
       </header>
-      
+
       <div class="container">
          <div class="inner-page-title">
             <h1>Прайс-лист</h1>
@@ -113,5 +113,19 @@
             </section>
          </div>
       </footer>
+      <div class="modal-content">
+         <div class="modal-content-close">закрыть</div>
+         <h2 class="modal-content-title">Личный кабинет</h2>
+               <p>Введите пожалуйста свой логин и пароль.</p>
+            <form class="login-form" action="/echo" method="post">
+               <input type="text" class="icon-user" name="login" placeholder="Логин" >
+               <input type="password" class="icon-password" name="password" placeholder="Пароль" >
+               <input type="checkbox" name="remember" id="remember-me">
+               <label for="remember-me">Запомните меня</label>
+               <a href="#" class="restore">Я забыл пароль!</a>
+               <button type="submit" class="btn">Войти</button>
+            </form>
+      </div>
+      <script src="js/login.js"></script>
    </body>
 </html>

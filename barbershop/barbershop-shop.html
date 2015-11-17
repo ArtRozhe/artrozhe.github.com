@@ -37,7 +37,7 @@
 				</div>
 			</div>
 		</header>
-		
+
 		<div class="inner-content">
 			<div class="container clearfix">
 				<h2 class="goods-title">Средства для ухода</h2>
@@ -56,7 +56,7 @@
 										<input type="checkbox" id="baxter" checked>
 				                  <label for="baxter">Baxter of California</label>
 				               </li>
-									
+
 									<li>
 										<input type="checkbox" id="natty">
 				                  <label for="natty">Mr Natty</label>
@@ -77,7 +77,7 @@
 				                	<input type="checkbox" id="american">
 				                  <label for="american">American Crew</label>
 				               </li>
-				            </ul>						
+				            </ul>
 							</div>
 
 							<div class="filter-name filter-goods">
@@ -87,7 +87,7 @@
 										<input type="radio" name="goods" id="razor" checked>
 				                  <label for="razor">Бритвенные
 				                  принадлежности</label>
-									</li>	
+									</li>
 				               <li>
 				                  <input type="radio" name="goods" id="care">
 				                  <label for="care">Средства для ухода</label>
@@ -102,11 +102,11 @@
 							<input type="submit" value="Показать">
 						</form>
 					</section>
-					
+
 					<div class="goods">
 						<div class="goods-box">
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_1.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="barbershop-item.html"><img src="img/catalog-image_1.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Набор для путешествий<br> <span>«Baxter of California»</span></div>
 									<div class="goods-item-price">2900 руб.</div>
@@ -115,7 +115,7 @@
 							</div>
 
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_2.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="#"><img src="img/catalog-image_2.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Увлажняющий кондиционер<br> <span>«Baxter of California»</span></div>
 									<div class="goods-item-price">750 руб.</div>
@@ -124,7 +124,7 @@
 							</div>
 
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_3.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="#"><img src="img/catalog-image_3.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Гель для волос<br> <span>«Sauvecito»</span></div>
 									<div class="goods-item-price">290 руб.</div>
@@ -133,7 +133,7 @@
 							</div>
 
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_4.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="#"><img src="img/catalog-image_4.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Глина для укладки волос<br> <span>«American Crew»</span></div>
 									<div class="goods-item-price">500 руб.</div>
@@ -142,7 +142,7 @@
 							</div>
 
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_5.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="#"><img src="img/catalog-image_5.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Гель для волос<br> <span>«American Crew»</span></div>
 									<div class="goods-item-price">300 руб.</div>
@@ -151,7 +151,7 @@
 							</div>
 
 							<div class="goods-item">
-								<div class="goods-item-image"><img src="img/catalog-image_6.jpg" alt=""></div>
+								<div class="goods-item-image"><a href="#"><img src="img/catalog-image_6.jpg" alt=""></a></div>
 								<div class="goods-item-desc">
 									<div class="goods-item-name">Набор для бритья<br> <span>«Baxter of California»</span></div>
 									<div class="goods-item-price">2900 руб.</div>
@@ -192,5 +192,19 @@
 				</section>
 			</div>
 		</footer>
+		<div class="modal-content">
+			<div class="modal-content-close">закрыть</div>
+			<h2 class="modal-content-title">Личный кабинет</h2>
+					<p>Введите пожалуйста свой логин и пароль.</p>
+				<form class="login-form" action="/echo" method="post">
+					<input type="text" class="icon-user" name="login" placeholder="Логин" >
+					<input type="password" class="icon-password" name="password" placeholder="Пароль" >
+					<input type="checkbox" name="remember" id="remember-me">
+					<label for="remember-me">Запомните меня</label>
+					<a href="#" class="restore">Я забыл пароль!</a>
+					<button type="submit" class="btn">Войти</button>
+				</form>
+		</div>
+		<script src="js/login.js"></script>
 	</body>
 </html>

@@ -343,7 +343,7 @@ body {
 	margin-bottom: 35px;
 	padding: 45px 80px;
 	color: #000;
-	background: 
+	background:
 		url("../img/index-content-shadow.png") no-repeat center,
 		#f8f5f2 url("../img/pattern-white.jpg");
 }
@@ -548,7 +548,7 @@ input[type="radio"] {
 }
 
 .filter-list input[type="checkbox"]:checked + label::before {
-	background-position: -65px -15px;	
+	background-position: -65px -15px;
 }
 
 .filter-list input[type="radio"] + label::before {
@@ -894,6 +894,7 @@ input[type="radio"] {
 	display: none;
 	top: 0;
 	left: 50%;
+	z-index: 3;
 	margin-top: 150px;
 	margin-left: -230px;
 	width: 300px;
@@ -984,7 +985,7 @@ input[type="radio"] {
   background-image: url("../img/sprite/icon-user.png");
   background-repeat: no-repeat;
   background-position: 95% 50%;
-  
+
 }
 
 .login-form input.icon-password {
