@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="utf-8">
+		<title>CSSSR Form</title>
+		<link href="assets/styles/app.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;amp;subset=latin,cyrillic-ext" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="container">
+				<div class="header"></div>
+				<form method="post" class="form">
+					<ul class="text-fields">
+						<li class="text-fields__item">
+							<label for="fio" class="text-fields__label">Полное ФИО</label>
+							<input type="text" id="fio" value="Рожков Артём Владимирович" required="required" class="text-fields__input" />
+						</li>
+						<li class="text-fields__item">
+							<label for="birth" class="text-fields__label">Год рождения</label>
+							<input type="text" id="birth" value="1993" required="required" class="text-fields__input" />
+						</li>
+						<li class="text-fields__item">
+							<label for="place" class="text-fields__label">Место жительства</label>
+							<input type="text" id="place" value="г. Томск, Россия" required="required" class="text-fields__input" />
+						</li>
+						<li class="text-fields__item">
+							<label for="skype" class="text-fields__label">Скайп</label>
+							<input type="text" id="skype" value="k.a.l.i.s." required="required" class="text-fields__input" />
+						</li>
+						<li class="text-fields__item">
+							<label for="mail" class="text-fields__label">Почта</label>
+							<input type="text" id="mail" value="artrozhe@gmail.com" required="required" class="text-fields__input" />
+						</li>
+					</ul>
+					<div class="radio-fields clearfix">
+						<div class="radio-fields__description">Выпускник <a href="https://htmlacademy.ru" target="_blank" class="radio-fields__link">htmlacademy.ru</a>
+						</div>
+						<input id="graduate-yes" type="radio" name="graduate" checked="checked" class="radio-fields__input" />
+						<label for="graduate-yes" class="radio-fields__label">Да</label>
+						<input id="graduate-no" type="radio" name="graduate" class="radio-fields__input" />
+						<label for="graduate-no" class="radio-fields__label">Нет</label>
+					</div>
+					<div class="practic-skills">
+						<h3 class="practic-skills__title">Практические навыки</h3>
+						<p class="practic-skills__note">Отметьте только те технологии и типы задач, с которыми Вы хорошо знакомы. Отсутствие опыта отнюдь не означает, что у Вас меньше шансов стать нашим сотрудником. Это означает, что Вы будете получать те задачи, с которыми гарантированно будете справляться.</p>
+						<div
+						class="skills-list clearfix">
+							<ul class="skills-list__col-1">
+								<li class="skills-list__item">
+									<input type="checkbox" id="bem" checked="checked" class="skills-list__input" />
+									<label for="bem" class="skills-list__label">Методология БЭМ</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="jquery" checked="checked" class="skills-list__input" />
+									<label for="jquery" class="skills-list__label">jQuery</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="grunt" class="skills-list__input" />
+									<label for="grunt" class="skills-list__label">Использую GRUNT</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="haml" class="skills-list__input" />
+									<label for="haml" class="skills-list__label">HAML</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="sass" class="skills-list__input" />
+									<label for="sass" class="skills-list__label">SASS</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="less" checked="checked" class="skills-list__input" />
+									<label for="less" class="skills-list__label">LESS</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="coffee" class="skills-list__input" />
+									<label for="coffee" class="skills-list__label">CoffeeScript</label>
+								</li>
+							</ul>
+							<ul class="skills-list__col-2">
+								<li class="skills-list__item">
+									<input type="checkbox" id="jade" checked="checked" class="skills-list__input" />
+									<label for="jade" class="skills-list__label">Jade</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="stylus" checked="checked" class="skills-list__input" />
+									<label for="stylus" class="skills-list__label">Stylus</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="angular" class="skills-list__input" />
+									<label for="angular" class="skills-list__label">Знаю (изучаю) Angular</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="android" class="skills-list__input" />
+									<label for="android" class="skills-list__label">Вёрстка под Android</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="ios" class="skills-list__input" />
+									<label for="ios" class="skills-list__label">Вёрстка под iOS</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="win" class="skills-list__input" />
+									<label for="win" class="skills-list__label">Вёрстка под Windows Phone</label>
+								</li>
+							</ul>
+							<ul class="skills-list__col-3">
+								<li class="skills-list__item">
+									<input type="checkbox" id="mailing" class="skills-list__input" />
+									<label for="mailing" class="skills-list__label">Вёрстка рассылок</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="adaptive" class="skills-list__input" />
+									<label for="adaptive" class="skills-list__label">Адаптивная вёрстка</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="dropbox" class="skills-list__input" />
+									<label for="dropbox" class="skills-list__label">Использую Dropbox</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="gmail" checked="checked" class="skills-list__input" />
+									<label for="gmail" class="skills-list__label">Использую Gmail</label>
+								</li>
+								<li class="skills-list__item">
+									<input type="checkbox" id="git" checked="checked" class="skills-list__input" />
+									<label for="git" class="skills-list__label">Использую GitHub</label>
+								</li>
+							</ul>
+					</div>
+					<div class="js-skills">
+						<h3 class="js-skills__title">Уровень владения JavaScript</h3>
+						<div class="js-skills__slider clearfix">
+							<div class="js-skills__triangle"></div>
+						</div>
+						<input type="text" id="level" value="Использую готовые решения" class="js-skills__level" />
+						<div class="js-skills__items">
+							<div id="level-1" class="js-skills__item">Не владею</div>
+							<div id="level-2" class="js-skills__item">Использую готовые решения</div>
+							<div id="level-3" class="js-skills__item">Использую готовые решения и умею их переделывать</div>
+							<div id="level-4" class="js-skills__item">Пишу сложные скрипты</div>
+						</div>
+					</div>
+			</div>
+			<div class="text-fields text-fields_type_date">
+				<label for="date" class="text-fields__label">Дата заполнения</label>
+				<input type="text" id="date" value="28.10.2015" required="required" class="text-fields__input" />
+			</div>
+			</form>
+		</div>
+		</div>
+		<script src="assets/scripts/app.min.js"></script>
+	</body>
+
+</html>
