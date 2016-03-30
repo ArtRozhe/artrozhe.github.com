@@ -1,7 +1,7 @@
-{"menu":[
+﻿{"menu":[
     {"name": "АБВГДЕЙКА", "link": "login", "sub": null
     },
-    {"name": "Пункт 2", "link": "http://google.com", "sub": [
+    {"name": "Пункт 2", "link": "http://google.com", "active": true, "sub": [
         {"name": "Arsenal","link": "0-0", "sub": null},
         {"name": "Liverpool","link": "0-1", "sub": null},
         {"name": "Manchester United","link": "0-2", "sub": null}
