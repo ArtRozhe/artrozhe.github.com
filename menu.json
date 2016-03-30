@@ -1,15 +1,12 @@
 {"menu":[
-    {"name": "Croatia", "link": "0", "sub": null
+    {"name": "АБВГДЕЙКА", "link": "login", "sub": null
     },
-    {"name": "England", "link": "1", "sub": [
+    {"name": "Пункт 2", "link": "http://google.com", "sub": [
         {"name": "Arsenal","link": "0-0", "sub": null},
         {"name": "Liverpool","link": "0-1", "sub": null},
         {"name": "Manchester United","link": "0-2", "sub": null}
     ]},
-    {"name": "Spain", "link": "2", "sub": [
-        {"name": "Barcelona","link": "2-0", "sub": null},
-        {"name": "Real Madrid","link": "2-1", "sub": null}
-    ]},        
+    {"name": "Spain", "link": "2"},
     {"name": "Germany", "link": "3","sub": [
         {"name": "Bayern Munich","link": "3-1", "sub": null},
         {"name": "Borrusia Dortmund","link": "3-2", "sub": null}
