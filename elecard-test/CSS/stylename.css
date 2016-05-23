@@ -1,0 +1,627 @@
+/*MAIN STYLES*/
+
+html, body {
+    margin:0;
+    padding:0;
+    background-image: url("../bg/content__bg.jpg");
+    background-repeat: repeat;
+    min-width: 1020px;
+}
+
+/*-------------- Код для подключения шрифта в /css/stylename.css --------------------------*/
+
+/* font-family: "PTSansNarrowBold"; */
+@font-face {
+    font-family: "PTSansNarrowBold";
+    src: url("../fonts/PTSansNarrowBold/PTSansNarrowBold.eot");
+    src: url("../fonts/PTSansNarrowBold/PTSansNarrowBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/PTSansNarrowBold/PTSansNarrowBold.woff") format("woff"),
+    url("../fonts/PTSansNarrowBold/PTSansNarrowBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "PTSansNarrowRegular"; */
+@font-face {
+    font-family: "PTSansNarrowRegular";
+    src: url("../fonts/PTSansNarrowRegular/PTSansNarrow.eot");
+    src: url("../fonts/PTSansNarrowRegular/PTSansNarrow.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/PTSansNarrowRegular/PTSansNarrow.woff") format("woff"),
+    url("../fonts/PTSansNarrowRegular/PTSansNarrow.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: 'Bebas Neue Regular'; */
+@font-face {
+font-family: "Bebas Neue Regular";
+font-style: normal;
+font-weight: normal;
+src: url('../fonts/BebasNeue Regular.woff') format('woff');
+}
+/*---------Для посторения сетки-------------*/
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.layout-positioner {
+    margin: 0px auto;
+    width:1002px;
+}
+
+.icon {
+    display: inline;
+}
+
+.expand a {
+    float: right;
+    color: #b4aeae;
+    text-decoration: underline; 
+    font-family:"PTSansNarrowRegular";
+    font-size: 20px;
+}
+ /*---------------------------------------!ХЕДЕР!----------------------------------*/
+.header {
+    background:black;
+    font-size: 0px;
+    padding: 40px 0px;
+}
+    /*---Колонки хедера---*/    
+    .header__column {
+        height: 30px;
+        font-family: "PTSansNarrowBold";
+        display: inline-block;
+        font-size: 22px;
+        color: white;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    /*logo*/
+    .header .layout-column1 {
+        width:210px;
+        margin-right: 145px;
+    }
+    /*adress*/
+    .header .layout-column2 {
+        width:210px;
+        margin-right: 60px;
+    }
+    /*mail*/
+    .header .layout-column3 {
+        width:155px;
+        margin-right: 60px;
+    }
+    /*phone*/
+    .header .layout-column4 {
+        width:150px;
+        margin-right: 0px;
+    }
+
+/*--------------------------------------!КОНТЕНТ!--------------------------------------*/
+.content {
+    padding-top: 27px;
+}
+    /*-----------------Общее для контента-------------*/
+    .strip {
+        text-align: center;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+        .strip img {
+            width: 100%;
+        }
+
+    .heading-center {
+        text-align: left;
+        padding-left: 350px;
+        margin-bottom: 35px;
+        display: inline-block;
+    }
+
+    .heading {
+        font-family: "Bebas Neue Regular";
+        font-size: 25px;
+        text-transform:uppercase;
+        font-weight: normal;
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 15px;
+        padding-left: 15px;
+        padding-bottom: 20px;
+        margin: 0px;
+    }
+
+    .vk, .projects, .vacancies, .partners, .contacts {
+        padding-top: 9px;
+        font-size: 0px;
+    }
+    /*-----------------------Главное Меню к картинках------------------*/
+    .menu-img {
+        padding: 0px;
+        margin-bottom: 15px;
+    }
+
+        .menu-img__img{
+            width: 100%;
+            height: 100%;
+        }
+        .menu-img__item {
+            position:relative;
+            cursor: pointer;
+        }
+
+        .top{
+            z-index: 1000;
+        }
+        .menu-img--top {
+            position: absolute;
+            left: 0px;
+            bottom:0px;
+            width: 100%;
+        }
+
+        .menu-img--hover {
+            display: none;
+            
+        }
+            .menu-img__item:hover 
+            .menu-img--hover {
+                display:inline;
+                z-index: 1;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+        .menu-img__desc {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            text-transform: uppercase;
+            font-family: "Bebas Neue Regular";
+            color: white;
+            font-size: 40px;
+            z-index: 100;
+        }
+            .menu-img__item:hover 
+            .menu-img__desc {
+                height: 100%;
+                padding: 0;
+            }
+
+        .center {
+            width: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+            .menu-img__item:hover 
+            .center {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -20px;
+                margin-left: -75px;
+            }
+        .menu-img__p--top {
+            color: white;
+            width: 95%;
+            z-index: 21;
+            font-family: "PTSansNarrowRegular";
+            padding-left:35px;
+            padding-right:35px;
+            font-size:22px;
+        }
+
+        .menu-img__h2--top {
+            color: white;
+            font-family: "Bebas Neue Regular";
+            font-size: 35px;
+            text-transform:uppercase;
+            text-align: center;
+            font-weight: normal;
+        }
+        /*Пункт-меню "О компании"*/
+        .menu-img--about-company {
+            float: left;
+            margin-top: 4px;
+            margin-right: 10.5px;
+            height: 385px;
+            width: 626px;
+            background: 
+        }
+            .menu-img--about-company
+            .menu-img--top  {
+               background: rgba(0, 0, 0, 0.7);
+               z-index: 100px;
+            }
+        /*Пункт-меню "Вакансии"*/
+        .menu-img--vacancies {
+            float: right;
+            margin-bottom: 12px;
+            height: 229px;
+            width: 364px;
+        }
+            .menu-img--vacancies 
+            .menu-img__desc {
+               background: rgba(0, 142, 156, 0.7);
+            }
+        /*Пункт-меню "ВК"*/
+        .menu-img--vk {
+            float: left;
+            margin-right: 15px;
+            height: 149px;
+            width: 184px;
+        }
+            .menu-img--vk
+            .menu-img__desc {
+               background: rgba(120, 63, 160, 0.7);
+            }
+        /*Пункт-меню "Партнеры"*/
+        .menu-img--partners {
+            float: right;
+            height: 149px;
+            width: 165px;
+        }
+            .menu-img--partners
+            .menu-img__desc {
+               background: rgba(231, 159, 45, 0.7);
+            }
+        /*Пункт-меню "Проекты"*/
+        .menu-img--projects {
+            float: left;
+            margin-top: 10.5px;
+            margin-right: 14px;
+            height: 275px;
+            width: 492px;
+        }
+            .menu-img--projects 
+            .menu-img__desc {
+               background: rgba(21, 124, 26, 0.7);
+            }
+        /*Пункт-меню "Контакты"*/
+        .menu-img--contacts {
+            float: right;
+            margin-top: 10.5px;
+            height: 275px;
+            width: 495px;
+        }
+            .menu-img--contacts
+            .menu-img__desc {
+               background: rgba(121, 152, 238, 0.7);
+            }
+
+
+    /*-----------------------О Компании------------------*/
+     .about-company__column {
+        min-height: 355px;
+        padding-top: 9px;
+        padding-left: 0px;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 20px;
+        font-family: "PTSansNarrowRegular";
+        color: black;
+    }
+
+    /*первые проекты*/
+    .about-company .layout-column1 {
+        width:335px;
+        margin-right: 30px;
+    }
+    /*динамика роста*/
+    .about-company .layout-column2 {
+        width:260px;
+        margin-right: 65px;
+    }
+    /*компания является*/
+    .about-company .layout-column3 {
+        width:300px;
+    }
+
+        .about-company__ul {
+            padding: 0px 10px;
+            margin: 0px 10px;
+        }
+
+        .about-company__p {
+            padding: 0px 0px;
+            margin: 0px 0px;
+        }
+    /*--------------------------В Контакте-------------------------*/
+    .vk__column {
+        min-height: 300px;
+        display: inline-block;
+        padding-top: 0px;
+        padding-left: 0px;
+        vertical-align: top;
+        font-size: 20px;
+        font-family:"PTSansNarrowRegular";
+        color: black;
+    }
+    /*картинка*/
+    .vk .layout-column1 {
+        width:350px;
+        float: left;
+        text-align: center;
+        padding-top: 40px;
+    }
+    /*описания*/
+    .vk .layout-column2 {
+        width: 650px;
+        float: right;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+        .vk__p {
+            margin-top: 0px;
+            margin-bottom: 10px;
+            margin-left: 0px;
+            padding-left: 20px;
+        }
+    /*---------------------------Проекты-----------------------*/
+    .projects__item {
+        display: inline-block;
+        margin: 9px;
+       position: relative;
+        cursor: pointer;
+        width: 322px;
+        height: 184px;
+       }
+        .projects__item:nth-child(3n) {
+            margin-right: 0px;
+           }
+
+        .projects__item:nth-child(3n-2) {
+            margin-left: 0px;
+        }
+    /*при наведении*/
+    .projects__desc {
+        position: absolute;
+        left: 0;
+        top:0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 130, 140, 0.9);
+        font-family:"PTSansNarrowRegular";
+        color: white;
+        font-size: 24px;
+        padding: 45px 25px;
+        z-index: 100;
+        display: none;
+    }
+        .projects__item:hover
+        .projects__desc{
+            display: inline-block;
+        }
+
+    /*---------------------------Вакансии----------------------------*/
+    .vacancies__column {
+        min-height: 375px;
+        font-size: 20px;
+        font-family:"PTSansNarrowRegular";
+        color: black;
+    }
+    /*меню*/
+    .vacancies .layout-column1 {
+        width:350px;
+        float: left;
+    }
+        .vacancies__menu {
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+            cursor: pointer;
+            margin-bottom: 50px;
+        }
+
+        .vacancies__item {
+            display: inline-block;
+            text-align: left;
+            margin-left: 35px;
+            width: 340px;
+        }
+            .action  
+            .vacancies__item {
+                font-weight: bold;
+                margin-left: 0px;
+            }
+            .vacancies__item:before {
+                content: "";
+                float: left;
+                margin-right: 25px;
+                position: relative;
+                top:-8px;
+                height: 43px;
+                width: 11px;
+                background: green;
+                opacity: .4;
+                display: none;
+            }
+
+             .vacancies__item:after {
+                content: "";
+                float: right;
+                margin-top: 10px;
+                height: 13px;
+                width: 13px;
+                border-top: 1.5px solid grey;
+                border-right: 1.5px solid grey;
+                transform: rotate(45deg);
+                display: none;
+            }
+            .action
+            .vacancies__item:after,
+            .action
+            .vacancies__item:before {
+                display:inline-block;
+            }
+    /*Описание вакансий*/
+    .vacancies .layout-column2 {
+        width: 650px;
+        float: right;
+    }
+
+        .vacancies__p {
+            margin-top: 0px;
+            margin-bottom: 10px;
+            margin-left: 0px;
+            padding-left: 30px;
+            font-size: 18px;
+        }
+
+            .vacancies__p:last-child {
+              text-align: right;
+              margin-top: 40px;
+            }
+    /*----------------------------Партнеры------------------------------*/
+    .partners__box {
+        text-align: center;
+    }
+        .partners__item {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            width: 250.5px;
+            height: 187px;
+            text-align: center;
+            cursor: pointer;
+        }
+            .partners__item:hover{
+                background: rgba(256, 256, 256, 0.3);
+                border-bottom: 9px solid rgba(256, 0, 0, 0.65);
+                box-sizing: border-box;
+            }
+        .partners__logo--hover {
+            z-index: 1;
+            position:absolute;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left:0;
+            display: none;
+        }
+            .partners__item:hover  
+            .partners__logo--hover
+            {display: inline-block;}
+        /*установление логотипов по центру*/
+        .partners__logo--1{
+           margin-top:25px;
+        }
+
+        .partners__logo--2{
+           margin-top:10px;
+        }
+
+        .partners__logo--3{
+           margin-top:35px;
+        }
+
+        .partners__logo--4{
+           margin-top:55px;
+        }
+
+        .partners__logo--5{
+           margin-top:35px;
+        }
+
+        .partners__logo--6{
+           margin-top:35px;
+        }
+
+        .partners__logo--7{
+           margin-top:35px;
+        }
+
+        .partners__logo--8{
+           margin-top:65px;
+        }
+
+    /*--------------------------Контакты----------------------------*/
+    .contacts{
+        position: relative;
+        height: 630px;
+        width: 100%;
+    }
+        .contacts__arrow {
+            float: right;
+            display: inline-block;
+        }
+        /*карта*/
+        .contacts__map{
+            padding-left: 0px;
+            position: absolute;
+            top:80px;
+            right: 0;
+            left: 0;
+            bottom:0;
+        }
+        /*Окно для связи с компанией*/
+        .contacts__connection{
+            position: absolute;
+            height: 395px;
+            width: 588px;
+            background: white;
+            left: 40%;
+            bottom: 75px;
+        }
+            /*Левая часть с информацией для обратной связи*/
+            .connection__info{
+                float: left;
+                margin-left: 40px;
+                display: inline-block;
+                width: 200px;
+                font-size: 22px;
+                font-family:"PTSansNarrowRegular";
+                color: #138bb4;
+            }
+                .connection__info p{
+                    margin-bottom: 35px;
+                }
+                .connection__info p:first-child, .connection__question p{
+                    font-size: 25px;
+                    color: black;
+                }
+            /*Правая часть в созможностью задать вопрос*/
+            .connection__question{
+                float: right;
+                display: inline-block;
+                width: 260px;
+                font-size: 20px;
+                font-family:"PTSansNarrowRegular";
+            }
+                .connection__question p{
+                    text-align: center;
+                }
+                .connection__question label{
+                    font-size: 20px;
+                    color: grey;
+                    font-family:"PTSansNarrowRegular";
+                }
+                .question__text{
+                    width: 90%;
+                    height: 30px;
+                }
+                .question__text1 {
+                    height: 65px;
+                    width: 90%;
+                    margin-bottom: 20px;
+                }
+                .question__button{
+                    width: 90%;
+                    height: 50px;
+                    border: 0;
+                    background: #0b7fa6;
+                    font-family: "Bebas Neue Regular";
+                    text-transform:uppercase;
+                    color:white;
+                    cursor: pointer;
+                }
+/*--------------------------------------!ФУТЕР!----------------------------------------*/
+.footer {
+    background:black;
+    min-height: 65px;
+}
