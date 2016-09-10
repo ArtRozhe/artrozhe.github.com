@@ -1,0 +1,688 @@
+<html data-ember-extension="1"><head>
+    <title>Электронная регистратура</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+        <link rel="stylesheet" type="text/css" href="./~d3theme">
+    <link rel="stylesheet" type="text/css" href="~Static/er_fonts.css?ctype=text/css">
+    <link rel="stylesheet" type="text/css" href="~Static/er_base.css?ctype=text/css">
+    <link rel="stylesheet" type="text/css" href="~Static/er_form_max.css?ctype=text/css" media="screen and (min-width: 1220px)">
+    <link rel="stylesheet" type="text/css" href="~Static/er_form_min.css?ctype=text/css" media="screen and (max-width: 1219px)">
+    <link rel="stylesheet" href="~Static/feedback.css">
+    <!--[if gte IE 9]>
+        <style type="text/css">
+            * {
+                filter: none !important;
+            }
+        </style>
+    <![endif]-->
+    <!--[if IE]>
+        <script type="text/javascript" src="./external/xpath.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        SYS_current_theme = '';
+    </script>
+    <script type="text/javascript" src="./~d3api"></script>
+    <script type="text/javascript" src="./external/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="./external/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./external/jquery.notify.min.js"></script>
+    <script type="text/javascript" src="./external/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="./external/jquery.jswipe.js"></script>
+    <script type="text/javascript" src="~Static/deployJava.js"></script>
+    <script type="text/javascript" src="~Static/er_form.js"></script>
+</head>
+<body class="noselect" onresize="D3Api.resize(false);" oncontextmenu="return D3Api.onContextMenuBody(event);" onbeforeunload1="return 'Внимание.';">
+    <script>
+        if (+D3Api.globalClientData.get('erEyes', 0)) {
+            D3Api.addClass(document.body, 'er-eyes');
+        }
+    </script>
+    <iframe name="D3PrintContainer" src="javascript:false" frameborder="0" class="D3PrintContainer"></iframe>
+    <div id="D3MainContainer" class="D3MainContainer"><div cmptype="Form" class="er-form" scrollable="true" formname="er_terminal/er_main" id="d3ctrl141473219894067">
+    <textarea cmptype="Script" style="display:none;">    
+        MainForm.addEvent('oncreate', function () {
+            var dataUrl = D3ER.getDataUrl();
+            var erLogin = JSON.parse(D3Api.globalClientData.get('erLogin', 'null'));
+
+            setVisible('erMobileAssistantExit', false);
+
+            if (erLogin) {
+                setCaption('erUserExitFio', erLogin.fio);
+                setVisible('erUserExit', true);
+                setVisible('erMobileAssistantExit', true);
+            } else if (dataUrl.D3ErUsername) {
+                rpcPost('er', 'login', {
+                    username: dataUrl.D3ErUsername,
+                    is_web: true
+                }, function (response) {
+                    if (response.result == 1 &amp;&amp; response.user_info &amp;&amp; response.user_info.username) {
+                        var fio = ((response.fname || '') + ' ' + (response.iname || '') + ' ' + (response.oname || '')).trim();
+
+                        D3Api.globalClientData.set('erLogin', JSON.stringify({
+                            fio: fio,
+                            username: response.user_info.username,
+                            relatives: 1
+                        }));
+
+                        setCaption('erUserExitFio', fio);
+                        setVisible('erUserExit', true);
+                        setVisible('erMobileAssistantExit', true);
+                    }
+                }, function () {
+                    Form.onErrorRpcLoad('Ошибка авторизации. Пожалуйста, повторите попытку. Если проблема сохраняется, рекомендуется обратиться в техническую поддержку.');
+                });
+            }
+
+            Form.oncreate();
+        });
+        Form.oncreate = function () {
+            beginRequest();
+                executeAction('A_LOCALTIMESTAMP');
+                executeAction('A_ER_SETTINGS');
+                refreshDataSet('DS_ER_BUTTONS');
+            endRequest(true, false, function () {
+                var dataErSettings = getAction('A_ER_SETTINGS').data;
+
+                setVisible('erPhoneMain', dataErSettings.caption &amp;&amp; (dataErSettings.phone_1 || dataErSettings.phone_2));
+                D3ER.setCurrentDate(getVar('TIMESTAMP'));
+
+                Form._BUTTONS = {};
+                getDataSet('DS_ER_BUTTONS').data.forEach(function (item) {
+                    if (item.is_viewable != 1) {
+                        return;
+                    }
+                    if (!(item.hid in Form._BUTTONS)) {
+                        Form._BUTTONS[item.hid] = {};
+                    }
+                    Form._BUTTONS[item.hid][item.code] = item;
+                    delete item.is_viewable;
+                    delete item.hid;
+                });
+
+                var topLine = false;
+                var bottomLine = false;
+                var btnsRoot = Form._BUTTONS['null'];
+
+                if (!btnsRoot) {
+                    return;
+                }
+                if (btnsRoot['Бесплатный прием']) {
+                    btnsRoot['Бесплатный прием'].formname = 'er_experts';
+                    setCaption('freeReception', btnsRoot['Бесплатный прием'].caption);
+                    setVisible('tdFreeReception', topLine = true);
+                }
+                if (btnsRoot['Платный прием']) {
+                    btnsRoot['Платный прием'].formname = 'er_experts';
+                    setCaption('paidReception', btnsRoot['Платный прием'].caption);
+                    setVisible('tdPaidReception', topLine = true);
+                }
+                if (btnsRoot['Вызов врача на дом']) {
+                    btnsRoot['Вызов врача на дом'].formname = 'er_home_visits_lpu';
+                    setCaption('callDoctorHome', btnsRoot['Вызов врача на дом'].caption);
+                    setVisible('tdCallDoctorHome', bottomLine = true);
+                }
+                if (btnsRoot['Расписание врачей']) {
+                    setCaption('scheduleDoctors', btnsRoot['Расписание врачей'].caption);
+                    setVisible('tdScheduleDoctors', bottomLine = true);
+                }
+                if (btnsRoot['Личный кабинет']) {
+                    btnsRoot['Личный кабинет'].formname = 'er_account';
+                    setCaption('privateOffice', btnsRoot['Личный кабинет'].caption);
+                    setVisible('tdPrivateOffice', bottomLine = true);
+                }
+
+                if (topLine &amp;&amp; bottomLine) {
+                    setVisible('erHorizontalLineMain', true);
+                }
+            });
+        };
+        Form.onClickButtonLogin = function (name, params) {
+            if (!params) {
+                params = {};
+            }
+            D3ER.startLoad();
+            openForm('er_terminal/er_login', {
+                vars: {
+                    _BUTTONS: Form._BUTTONS,
+                    payment_kind: params.payment_kind,
+                    home_call: params.home_call || 0,
+                    button: Form._BUTTONS['null'][name]
+                }
+            },
+            D3Api.MainDom);
+        };
+        Form.onClickButtonSchedule = function () {
+            D3ER.startLoad();
+
+            var type = 'list';
+            var count = 0;
+
+            var GROUP = {};
+            var LPU = [];
+
+            if (D3Api.getOption('showLpuGroups', true)) {
+                type = 'list_without_group';
+
+                count++;
+                rpcGet('er', 'lpu_groups', null, function (response) {
+                    response.forEach(function (item) {
+                        if (!GROUP[item.hid]) {
+                            GROUP[item.hid] = [];
+                        }
+                        GROUP[item.hid].push(item);
+                        delete item.hid;
+                    });
+                    openFormAsynchronously();
+                }, Form.onErrorRpcLoad);
+            }
+
+            count++;
+            rpcGet('er', 'lpu', {type: type}, function (response) {
+                LPU = response.LPU;
+                openFormAsynchronously();
+            }, Form.onErrorRpcLoad);
+
+            function openFormAsynchronously() {
+                if (--count &gt; 0) {
+                    return;
+                }
+                openForm('er_terminal/er_schedule_group8lpu', {
+                    vars: {
+                        _GROUP: GROUP,
+                        _LPU: LPU
+                    }
+                }, D3Api.MainDom);
+            }
+        };
+    
+    </textarea>
+    
+    
+    
+    <div class="er-header">
+        <button type="button" class="er-button__help er-button box-sizing-force" onclick="Form.erHelp();" scrollable="true" formname="er_terminal/er_tools/er_help" cmptype="ErButton" title="" id="d3ctrl181473219894069">
+    <svg class="er-button__svgh">
+        <circle cx="20" cy="19" r="11" class="er-button__figure"></circle>
+        <path d="M20,12 v3 m0,2 v9" class="er-button__figure er-button__part"></path>
+    </svg>
+</button>
+        <button type="button" class="er-button__eyes er-button box-sizing-force" onclick="D3ER.eyes();" scrollable="true" formname="er_terminal/er_tools/er_eyes" cmptype="ErButton" title="" id="d3ctrl211473219894069">
+    <svg class="er-button__svgh">
+        <path d="M7,20 C15,9 25,9 33,20 M7,20 C15,31 25,31 33,20" class="er-button__figure"></path>
+        <circle cx="20" cy="20" r="4" class="er-button__figure er-button__part"></circle>
+    </svg>
+</button>
+<button type="button" class="er-button__eyes er-button feedback-window box-sizing-force" scrollable="true" cmptype="ErButton">I</button>
+        <div class="er-user-exit ctrl_hidden" cmptype="Base" name="erUserExit" title="" id="d3ctrl241473219894070">
+            <button type="button" class="er-button__exit-main er-button box-sizing-force" onclick="D3ER.erExit();" cmptype="ErButton" title="" id="d3ctrl271473219894070">
+                <svg class="er-button__svgh">
+                    <path d="M18,10 h12 v20 h-12" class="er-button__figure"></path>
+                    <path d="M10,20 h12 m-4,4 l4,-4 -4,-4" class="er-button__figure er-button__part"></path>
+                </svg>
+            </button>
+            &nbsp;&nbsp;<span name="erUserExitFio" cmptype="Label" title="" class="label" id="d3ctrl301473219894070"></span>&nbsp;&nbsp;
+        </div>
+        <span name="erTitle" cmptype="Label" title="" class="er-h1 er-logo-main label" id="d3ctrl331473219894071">Электронная регистратура</span>
+    </div>
+    <div class="er-content er-content__main"><span class="er-body-main">
+        <div name="erTitleMain" class="er-title-main er-text-form">Запись к врачу</div>
+        <table class="er-table">
+            <tbody><tr>
+                <td class="er-table__tm" cmptype="Base" name="tdFreeReception" title="" id="d3ctrl361473219894071">
+                    <button type="button" class="er-button__top-line-main er-button box-sizing-force" onclick="Form.onClickButtonLogin('Бесплатный прием', {payment_kind: 1});" name="freeReception" cmptype="ErButton" title="" id="d3ctrl391473219894071">Бесплатный прием</button>
+                </td>
+                <td class="er-table__tm" cmptype="Base" name="tdPaidReception" title="" id="d3ctrl421473219894071">
+                    <button type="button" class="er-button__top-line-main er-button box-sizing-force" onclick="Form.onClickButtonLogin('Платный прием', {payment_kind: 2});" name="paidReception" cmptype="ErButton" title="" id="d3ctrl451473219894071">Платный прием</button>
+                </td>
+            </tr>
+        </tbody></table>
+        <div class="er-horizontal-line-main" cmptype="Base" name="erHorizontalLineMain" title="" id="d3ctrl481473219894072"></div>
+        <table class="er-table">
+            <tbody><tr>
+                <td class="er-table__tm ctrl_hidden" cmptype="Base" name="tdCallDoctorHome" title="" id="d3ctrl511473219894072">
+                    <button type="button" class="er-button__bottom-line-main er-button box-sizing-force" onclick="Form.onClickButtonLogin('Вызов врача на дом', {home_call: 1});" cmptype="ErButton" title="" id="d3ctrl541473219894072">
+                        <table cellspacing="0" style="display: inline-table; vertical-align: middle;">
+                            <tbody><tr>
+                                <td style="width: 80px;"><img src="~Image/er/call_doctor_home" cmptype="Image" title="" class="D3Image" id="d3ctrl571473219894072"></td>
+                                <td><span name="callDoctorHome" cmptype="Label" title="" class="label" id="d3ctrl601473219894072"></span></td>
+                            </tr>
+                        </tbody></table>
+                    </button>
+                </td>
+                <td class="er-table__tm" cmptype="Base" name="tdScheduleDoctors" title="" id="d3ctrl631473219894072">
+                    <button type="button" class="er-button__bottom-line-main er-button box-sizing-force" onclick="Form.onClickButtonSchedule();" cmptype="ErButton" title="" id="d3ctrl661473219894073">
+                        <table cellspacing="0" style="display: inline-table; vertical-align: middle;">
+                            <tbody><tr>
+                                <td style="width: 80px;"><img src="~Image/er/schedule_doctors" cmptype="Image" title="" class="D3Image" id="d3ctrl691473219894073"></td>
+                                <td><span name="scheduleDoctors" cmptype="Label" title="" class="label" id="d3ctrl721473219894073">Расписание врачей</span></td>
+                            </tr>
+                        </tbody></table>
+                    </button>
+                </td>
+                <td class="er-table__tm" cmptype="Base" name="tdPrivateOffice" title="" id="d3ctrl751473219894073">
+                    <button type="button" class="er-button__bottom-line-main er-button box-sizing-force" onclick="Form.onClickButtonLogin('Личный кабинет');" cmptype="ErButton" title="" id="d3ctrl781473219894073">
+                        <table cellspacing="0" style="display: inline-table; vertical-align: middle;">
+                            <tbody><tr>
+                                <td style="width: 80px;"><img src="~Image/er/private_office" cmptype="Image" title="" class="D3Image" id="d3ctrl811473219894073"></td>
+                                <td><span name="privateOffice" cmptype="Label" title="" class="label" id="d3ctrl841473219894073">Личный кабинет</span></td>
+                            </tr>
+                        </tbody></table>
+                    </button>
+                </td>
+            </tr>
+        </tbody></table>
+        <div class="er-phone-main" cmptype="Base" name="erPhoneMain" title="" id="d3ctrl871473219894073">
+            <span name="caption" cmptype="Label" title="" class="label" id="d3ctrl901473219894073">Справочная</span>
+            <span name="phone_1" cmptype="Label" title="" class="er-phone-main__item er-text-form label" id="d3ctrl931473219894074">516-616</span>
+            <span name="comment_1" cmptype="Label" title="" class="label" id="d3ctrl961473219894074">бесплатно для жителей г. Томска</span>
+            <span name="phone_2" cmptype="Label" title="" class="er-phone-main__item er-text-form label" id="d3ctrl991473219894074">8-800-350-8850</span>
+            <span name="comment_2" cmptype="Label" title="" class="label" id="d3ctrl1021473219894074">бесплатно для жителей Томской области</span>
+        </div>
+    </span></div>
+    <div class="er-mobile-assistant">
+        <div class="er-mobile-assistant__item ctrl_hidden" onclick="D3ER.erExit();" cmptype="Base" name="erMobileAssistantExit" scrollable="true" formname="er_terminal/er_tools/er_exit_mobile" title="" id="d3ctrl1051473219894074">
+    <svg class="er-mobile-assistant__svg">
+        <path d="M11,12 l7,7 -7,7 m14,0 l-7,-7 7,-7" class="er-button__figure"></path>
+    </svg>
+</div>
+        <div class="er-mobile-assistant__item" onclick="Form.erHelp();" cmptype="Base" scrollable="true" formname="er_terminal/er_tools/er_help_mobile" title="" id="d3ctrl1081473219894074">
+    <svg class="er-mobile-assistant__svg">
+        <circle cx="20" cy="19" r="10" class="er-button__figure"></circle>
+        <path d="M20,13 v3 m0,2 v7" class="er-button__figure"></path>
+    </svg>
+</div>
+    </div>
+    <div class="ctrl_hidden er-message" name="erMessage" cmptype="ErMessage" title="" id="d3ctrl1111473219894074"><div class="er-message__body"><div class="er-message__buttons">&nbsp;<button type="button" class="er-button__exit-message er-button box-sizing-force" onclick="D3Api.ErMessageCtrl.show(this);" cmptype="ErButton" title="" id="d3ctrl1141473219894074"><svg class="er-button__svgf er-message__close"><path d="M2,9 l7,7 -7,7 m14,0 l-7,-7 7,-7" class="er-button__figure"></path></svg></button></div><div class="er-message__title"></div><div class="er-message__text"></div></div></div>
+    <textarea scrollable="true" formname="er_terminal/er_tools/er_script" cmptype="Script" style="display:none;">
+    Form.onErrorRpcLoad = function (message) {
+        D3ER.endLoad();
+        callControlMethod('erMessage', 'content', 'Сообщение сервера!', message);
+    };
+    Form.onErInputSearch = function () {
+        for (var i = 0; i &lt; arguments.length; i++) {
+            getRepeater(arguments[i]).repeat(true);
+        }
+    };
+    Form.onErBeforeCloneSearch = function (nameComponent) {
+        var value = getValue(nameComponent);
+
+        if (!value) {
+            return true;
+        }
+
+        var regex = new RegExp(value, 'i');
+
+        for (var i = 1; i &lt; arguments.length; i++) {
+            if (regex.test(arguments[i])) {
+                return true;
+            }
+        }
+        return false;
+    };
+    Form.refreshErCurrentDate = function erCurrentDate() {
+        var cur_date = D3ER.getCurrentDate();
+
+        try {
+            var control = getControl('erCurrentDate');
+
+            if (control) {
+                setCaption(control,
+                        'сегодня ' +
+                        cur_date.getDate() + ' ' +
+                        D3ER.getStrMonth(cur_date) + ' ' +
+                        cur_date.getFullYear() + ', ' +
+                        D3ER.getStrDay(cur_date) + ' ' +
+                        cur_date.getHours() + ':' +
+                        D3ER.strDate(cur_date.getMinutes())
+                );
+
+                setTimeout(control.D3Form.closure(erCurrentDate), 15 * 1000);
+            }
+        } catch (e) { }
+    };
+    Form.erHelp = function (help) {
+        D3ER.startLoad();
+        openForm('er_terminal/er_help', {
+            vars: {
+                nameform: MainForm.name.replace(/^er_terminal\//, ''),
+                help: help
+            }
+        }, D3Api.MainDom);
+    };
+    Form.onErPhonesRegistries = function (s) {
+        callControlMethod('erMessage', 'show', false);
+        D3ER.startLoad();
+        openForm('er_terminal/er_phones', {vars: {search: s}}, D3Api.MainDom);
+    };
+
+</textarea>
+    
+<div cmptype="sysinfo" style="display:none;">
+<action name="A_LOCALTIMESTAMP">
+<var put="p0" src="TIMESTAMP" srctype="var"></var>
+</action>
+<action name="A_ER_SETTINGS">
+<var put="caption" src="caption:caption" srctype="ctrl"></var>
+<var put="phone_1" src="phone_1:caption" srctype="ctrl"></var>
+<var put="comment_1" src="comment_1:caption" srctype="ctrl"></var>
+<var put="phone_2" src="phone_2:caption" srctype="ctrl"></var>
+<var put="comment_2" src="comment_2:caption" srctype="ctrl"></var>
+</action>
+<dataset name="DS_ER_BUTTONS" activateoncreate="false">
+</dataset>
+</div>
+<style>
+        .er-logo-main {
+            line-height: 46px;
+            padding-left: 58px;
+            font-size: 30px;
+            background: transparent url('~Image/er/logo') 0 0 no-repeat;
+        }
+        .er-button__top-line-main {
+            font-size: 30px;
+            width: 100%;
+            height: 150px;
+        }
+        .er-horizontal-line-main {
+            margin: 20px 20px 18px;
+            border-top: 1px solid rgba(134, 179, 176, 0.5);
+            border-bottom: 1px solid rgba(234, 246, 246, 0.5);
+        }
+        .er-eyes .er-horizontal-line-main {
+            border-top-color: #232323;
+        }
+        .er-button__bottom-line-main {
+            width: 100%;
+            height: 110px;
+        }
+        .er-phone-main {
+            padding: 13px 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .er-phone-main__item {
+            font-size: 22px;
+        }
+    </style></div></div>
+    <div id="D3MsgsContainer"><div cmptype="Form" oncreate="Form.onCreateMsgsFrm();" scrollable="true" formname="System/msgs" id="d3ctrl41473219894045">
+    
+    <textarea cmptype="Script" style="display:none;">        
+        Form.openedMsgs = 0;
+        Form.timer = null;
+        Form.beginRequestUid = 'random_uid';
+        Form.onCreateMsgsFrm = function()
+        {
+            D3Api.Base.addEvent('onRequestServerBegin', Form.onRequestCheck);
+            D3Api.Base.addEvent('onRequestServerEnd', Form.onResponseCheck);
+        };
+        Form.onRequestCheck = function(req,uid)
+        {
+            if(Form.beginRequestUid == '')
+            {
+                Form.beginRequestUid = uid;
+            }
+        };
+        Form.onResponseCheck = function(req,uid)
+        {
+            //Наш запрос, не уходим в рекурсию, уже будет работать условие Form.openedMsgs &gt; 0, но ...
+            if(Form.beginRequestUid == uid)
+                return;
+            
+            Form.requestMsgs(true);
+        };
+        Form.requestMsgs = function(req)
+        {
+            if(Form.openedMsgs &gt; 0 || req)
+            {
+                //Если вызвали пока есть открытые сообщения или пришли запросы, откладываем обновление на 2 сек
+                clearTimeout(Form.timer);
+                Form.timer = setTimeout(Form.requestMsgs,2000); 
+                return;
+            }
+            Form.openedMsgs = 0;
+            //Каждые пять минут
+            clearTimeout(Form.timer);
+            Form.timer = setTimeout(Form.requestMsgs,300000); 
+            Form.beginRequestUid = '';
+            D3Api.setSysRequest();
+            refreshDataSet('dsMsgs',Form.showMsgs);
+        };
+        Form.showMsgs = function()
+        {
+            var data = getDataSet('dsMsgs').data;
+
+            for(var i = 0; i &lt; data.length; i++)
+            {
+                var msg = data[i];
+                var footer =    '&lt;table style="width: 100%;"&gt;\
+                                    &lt;colgroup&gt;\
+                                        &lt;col width="50%"/&gt;\
+                                        &lt;col width="50%"/&gt;\
+                                    &lt;/colgroup&gt;\
+                                    &lt;tr&gt;\
+                                        &lt;td colspan="2"&gt;\
+                                            ' + ((msg.sysuser_to &amp;&amp; msg.msg_type == 0) ? '@textarea cont="msg_answer" class="msg_answer"&gt;@/textarea&gt;' : '') + ' &lt;hr class="msg_split"/&gt;\
+                                        &lt;/td&gt;\
+                                    &lt;/tr&gt;\
+                                    &lt;tr&gt;\
+                                        &lt;td&gt;\
+                                            ' + ((msg.sysuser_to &amp;&amp; msg.msg_type == 0) ? '&lt;a href="#" cont="btn_msg_answer" class="notify_btn_msg"&gt;Ответить&lt;/a&gt;' : '') + ' \
+                                        &lt;/td&gt;\
+                                        &lt;td style="text-align: right;"&gt;\
+                                            &lt;a href="#" cont="btn_msg_mark" class="notify_btn_msg"&gt;Прочитано&lt;/a&gt;\
+                                        &lt;/td&gt;\
+                                    &lt;/tr&gt;\
+                                &lt;/table&gt;';
+
+                Form.openedMsgs++;
+                var nt = D3Api.notify('&lt;span class="msg_time"&gt;'+msg.date+' '+msg.sysuser_fr_fullname+'&lt;/span&gt;&lt;hr class="msg_split"/&gt;'+msg.msg_caption, msg.msg,
+                {
+                    template: 'modal',
+                    modal: true,
+                    footer: footer.replace(/@/g, '&lt;')
+                });
+                var btn = D3Api.getDomByAttr(nt.element[0],'cont','btn_msg_mark');
+                btn &amp;&amp; (btn.onclick=closure(Form.markMsg,msg,nt));
+                var btn = D3Api.getDomByAttr(nt.element[0],'cont','btn_msg_answer');
+                btn &amp;&amp; (btn.onclick=closure(Form.answerMsg,msg,nt));
+            }
+        };
+        Form.markMsg = function(event,msg,notify)
+        {
+            setVar('msgid',msg.id);
+            executeAction('actMsgMark', function(){
+                Form.openedMsgs--;
+                notify.close();
+                Form.requestMsgs();
+            });
+        };
+        Form.answerMsg = function(event,msg,notify)
+        {
+            var text = D3Api.getDomByAttr(notify.element[0],'cont','msg_answer');
+            if(!text.value)
+            {
+                alert('Ответ не может быть пустым.');
+                return;
+            }
+            setVar('msgid',msg.id);
+            setVar('sysuser_to',msg.sysuser_fr);
+            setVar('msg_caption','Re:'+msg.msg_caption);
+            setVar('msg',text.value);
+            executeAction('actMsgMark',function(){
+                executeAction('actMsgAnswer',function(){
+                    Form.openedMsgs--;
+                    notify.close();
+                    Form.requestMsgs();
+                });
+            });
+        };
+        
+    </textarea>
+    
+    
+    
+    
+<div cmptype="sysinfo" style="display:none;">
+<dataset name="dsMsgs">
+</dataset>
+<action name="actMsgMark">
+<var get="msgid" src="msgid" srctype="var"></var>
+</action>
+<action name="actMsgAnswer">
+<var get="msg_caption" src="msg_caption" srctype="var"></var>
+<var get="msg" src="msg" srctype="var"></var>
+<var get="sysuser_to" src="sysuser_to" srctype="var"></var>
+</action>
+</div>
+<style type="text/css">
+        .msg_answer
+        {
+            width: 100%;
+            height: 24px;
+            background: #FFFFFF;
+            margin-top: 5px;
+            
+        }
+        .notify_btn_msg
+        {
+            color: #FFFFFF;
+        }
+        .msg_split
+        {
+            border: 0 none;
+            border-top: 1px solid #AAAAAA;
+        }
+        .msg_time
+        {
+            font-weight: normal;
+        }
+    </style></div></div>
+    <div id="D3LoadContainer">
+        <div class="load">Загрузка...</div>
+    </div>
+    <div id="D3_NOT_SUPPORTED" class="notSupportedBrowser">
+        <span class="other"></span><table cellspacing="0">
+            <colgroup>
+                <col width="50%">
+                <col width="20%">
+                <col width="30%">
+            </colgroup>
+            <tbody><tr>
+                <th colspan="3">Ваш браузер не поддерживается!</th>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Вы работаете с браузером: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36<br><br>
+                    Для работы рекомендуем использовать следующие браузеры:
+                </td>
+            </tr>
+            <tr>
+                <th>Название браузера</th>
+                <th>Версия</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>Internet Explorer</td>
+                <td>9+</td>
+                <td><a href="http://windows.microsoft.com/ru-ru/internet-explorer/browser-ie">Установить</a></td>
+            </tr>
+            <tr>
+                <td>Mozilla Firefox</td>
+                <td>20+</td>
+                <td><a href="http://mozilla.org/download">Установить</a></td>
+            </tr>
+            <tr>
+                <td>Google Chrome</td>
+                <td>35+</td>
+                <td><a href="https://www.google.com/chrome/">Установить</a></td>
+            </tr>
+            <tr>
+                <td>Opera</td>
+                <td>20+</td>
+                <td><a href="http://ru.opera.com/">Установить</a></td>
+            </tr>
+            <tr>
+                <td>Safari</td>
+                <td>5+</td>
+                <td><a href="http://www.apple.com/safari/">Установить</a></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <a href="./" id="D3_NOT_SUPPORTED_NEXT">Попытаться, продолжить →</a>
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+    <script type="text/javascript">
+        var D3Browser = (function () {
+            var ua = navigator.userAgent.toLowerCase();
+            return {
+                version: parseInt((ua.match( /.+(?:me|ox|on|rv|it|era|opr|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1]),
+                opera: (/opera/i.test(ua) || /opr/i.test(ua)),
+                msie: (/msie/i.test(ua) && !/opera/i.test(ua) || /trident\//i.test(ua)),
+                mozilla: /firefox/i.test(ua),
+                chrome: /chrome/i.test(ua),
+                safari: (!(/chrome/i.test(ua)) && /webkit|safari|khtml/i.test(ua)),
+                iphone: /iphone/i.test(ua),
+                ipod: /ipod/i.test(ua),
+                ipad: /ipad/i.test(ua),
+                android: /android/i.test(ua),
+                bada: /bada/i.test(ua),
+                mobile: /iphone|ipod|ipad|opera mini|opera mobi|iemobile|android/i.test(ua),
+                msie_mobile: /iemobile/i.test(ua),
+                safari_mobile: /iphone|ipod|ipad/i.test(ua),
+                opera_mobile: /opera mini|opera mobi/i.test(ua),
+                opera_mini: /opera mini/i.test(ua),
+                mac: /mac/i.test(ua)
+            };
+        }());
+        
+        function checkD3Browser() {
+            if(D3Browser.mobile) return false;
+            if(D3Browser.opera) return D3Browser.version < 20;
+            if(D3Browser.msie) return D3Browser.version < 9;
+            if(D3Browser.mozilla) return D3Browser.version < 20;
+            if(D3Browser.chrome) return D3Browser.version < 35;
+            if(D3Browser.safari) return D3Browser.version < 5;
+        }
+        
+        D3Api.SYS_CACHE_UID = 'c582d9baca1a0d8e698097a4f741e7270';
+        D3Api.SYS_CONFIG = {"formCache":true,"showDependence":true,"timeOffset":0,"inactivitySystem":5,"pressBanBusyDate":true};
+        D3Api.SYS_CONFIG.debug = 0;
+        D3Api.startInit = function() {
+                };
+        D3Api.startInit();
+        D3Api.init();
+        D3Api.MainDom = document.getElementById('D3MainContainer');
+        D3Api.D3MainContainer = D3Api.MainDom;
+
+        document.write('<div id="D3AppletContainer">');
+        
+                        
+        document.write('</div>');
+
+        function loginER() {
+            if (D3Api.globalClientData.get('erSupportedNext') == 1 || !checkD3Browser()) {
+               next();
+            } else {
+                document.getElementById('D3_NOT_SUPPORTED_NEXT').onclick = function (event) {
+                    document.getElementById('D3_NOT_SUPPORTED_NEXT').onclick = null;
+                    document.getElementById('D3_NOT_SUPPORTED').style.display = '';
+                    event.preventDefault();
+                    next();
+                };
+                document.getElementById('D3_NOT_SUPPORTED').style.display = 'block';
+            } 
+            
+            function next() {
+                D3Api.globalClientData.set('erSupportedNext', 1);
+                D3Api.showForm('System/msgs', document.getElementById('D3MsgsContainer'), {history: false});
+                D3Api.showForm('er_terminal/er_main', null, {history: false});
+            }
+        }
+
+        D3Api.globalClientData.set('systemUserToken', '636b56506d.902e755dec74b15f48bf15d5904f7331'); loginER();    </script><div id="D3AppletContainer"></div>
+  <script src="external/feedback-window.js"></script>
+  <script src="external/vanilla-masker.min.js"></script>
+  <script src="external/script.js"></script>
+</body></html>

@@ -1,0 +1,93 @@
+.er-header,
+.er-radio-group__tabs,
+.er-content,
+.er-footer {
+    padding: 20px 20px 0;
+}
+.er-header {
+    padding-top: 60px;
+}
+.er-footer {
+    padding-top: 0;
+    padding-bottom: 20px;
+}
+.er-footer__time {
+    padding-top: 20px;
+}
+.er-content__help {
+    margin-top: 20px;
+}
+.er-mobile-assistant {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.7);
+}
+.er-mobile-assistant__item {
+    display: table-cell;
+    padding: 0;
+    border-left: 1px solid rgba(150, 150, 150, 0.5);
+}
+.er-mobile-assistant__item:first-child {
+    border-left: 0 none;
+}
+.er-mobile-assistant__svg {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+}
+.er-mobile-assistant__svg .er-button__figure {
+    stroke: white;
+}
+.er-button__eyes,
+.er-button__help,
+.er-button__back,
+.er-button__home,
+.er-button__exit,
+.er-user-exit,
+.er-button__print-time,
+.er-button__account-print-ticket,
+.er-button__account-print-cost-services,
+.er-button__time_hidden,
+.er-button_closed,
+.er-no-mobile-block {
+    display: none !important;
+}
+.er-body-main,
+.er-radio-group__tabs > .er-button,
+.er-table,
+.er-table > tbody,
+.er-table > tbody > tr,
+.er-table > tbody > tr > td {
+    display: block;
+}
+.er-table__tr {
+    padding: 0 0 10px;
+}
+.er-table__tm {
+    padding: 5px 0;
+}
+.er-title-main {
+    padding-bottom: 5px;
+    font-size: 40px;
+}
+.er-radio-group__tabs > .er-button {
+    width: 100%;
+    text-align: start;
+}
+.er-edit__search {
+    margin: 0 0 10px;
+}
+.er-table__th-schedule {
+    border-top: 1px solid transparent;
+}
+.er-button__payment-kind-time {
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
